@@ -31,7 +31,7 @@ Add it to your `INSTALLED_APPS`:
 
     INSTALLED_APPS = (
         ...
-        'referrals.apps.ReferralsConfig',
+        'referrals',
         ...
     )
 
@@ -44,7 +44,7 @@ Add referrals's URL patterns:
 
     urlpatterns = [
         ...
-        url(r'^', include(referrals_urls)),
+        url(r'^referrals/', include('referrals_urls', namespace='referrals')),
         ...
     ]
 
