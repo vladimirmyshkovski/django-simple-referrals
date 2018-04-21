@@ -2,6 +2,7 @@ from test_plus.test import TestCase
 from referrals import models, views
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied
+User = get_user_model()
 
 
 class TestFlatReferralListView(TestCase):
@@ -123,7 +124,6 @@ class TestFlatReferralDetailView(TestCase):
 		self.assertTemplateUsed(resp, 'referrals/flat_referral_detail.html')
 
 	def test_permission_denied(self):
-		User = get_user_model()
 		user = User.objects.create_user(username = 'fakeuser', password = 'password')
 		login = self.client.login(username='fakeuser', password='password')
 		resp = self.client.get(self.reverse('referrals:flat_referral_detail', pk=1))
@@ -137,16 +137,17 @@ class TestFlatReferralDetailView(TestCase):
 class TestMultiLevelReferralListView(TestCase):
 
 	def setUp(self):
-		import random
 		referrer = self.make_user('u1')
 		
 		self.root = models.MultiLevelReferral.add_root(user = referrer)
-		referred = self.make_user('u{}'.format(random.randint(5, 999)))
+		_id = User.objects.last().id
+		referred = self.make_user('u{}'.format(int(_id) + 1))
 		self.root.add_child(user = referred)
 
 		for _ in range(15):
 			referral = models.MultiLevelReferral.objects.get(user = referred)
-			user = self.make_user('u{}'.format(random.randint(1000, 9999)))
+			_id = User.objects.last().id
+			user = self.make_user('u{}'.format(int(_id) + 1))
 			referral.add_child(user = user)
 
 
@@ -215,12 +216,14 @@ class TestMultiLevelReferralDetailView(TestCase):
 		referrer = self.make_user('u1')
 		
 		self.root = models.MultiLevelReferral.add_root(user = referrer)
-		referred = self.make_user('u{}'.format(random.randint(5, 999)))
+		_id = User.objects.last().id
+		referred = self.make_user('u{}'.format(int(_id + 1)))
 		self.root.add_child(user = referred)
 
 		for _ in range(15):
 			referral = models.MultiLevelReferral.objects.get(user = referred)
-			user = self.make_user('u{}'.format(random.randint(1000, 9999)))
+			_id = User.objects.last().id
+			user = self.make_user('u{}'.format(int(_id + 1)))
 			referral.add_child(user = user)
 
 	def test_redirect_if_not_logged_in(self):
@@ -258,7 +261,6 @@ class TestMultiLevelReferralDetailView(TestCase):
 		self.assertTemplateUsed(resp, 'referrals/multi_level_referral_detail.html')
 	
 	def test_permission_denied(self):
-		User = get_user_model()
 		user = User.objects.create_user(username = 'fakeuser', password = 'password')
 		self.root.add_child(user = user)
 
