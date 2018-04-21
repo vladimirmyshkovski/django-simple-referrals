@@ -2,28 +2,28 @@
 referrals
 =============================
 
-.. image:: https://badge.fury.io/py/django-referrals.svg
-    :target: https://badge.fury.io/py/django-referrals
+.. image:: https://badge.fury.io/py/django-simple-referrals.svg
+    :target: https://badge.fury.io/py/django-simple-referrals
 
-.. image:: https://travis-ci.org/narnikgamarnikus/django-referrals.svg?branch=master
-    :target: https://travis-ci.org/narnikgamarnikus/django-referrals
+.. image:: https://travis-ci.org/narnikgamarnikus/django-simple-referrals.svg?branch=master
+    :target: https://travis-ci.org/narnikgamarnikus/django-simple-referrals
 
-.. image:: https://codecov.io/gh/narnikgamarnikus/django-referrals/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/narnikgamarnikus/django-referrals
+.. image:: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals
 
 A simple application that allows you to generate referral links and track referrals
 
 Documentation
 -------------
 
-The full documentation is at https://django-referrals.readthedocs.io.
+The full documentation is at https://django-simple-referrals.readthedocs.io.
 
 Quickstart
 ----------
 
 Install referrals::
 
-    pip install django-referrals
+    pip install django-simple-referrals
 
 Add it to your `INSTALLED_APPS`:
 

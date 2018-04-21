@@ -51,7 +51,7 @@ setup(
     long_description=readme + '\n\n' + history,
     author='Vladimir Myshkovski',
     author_email='vladimirmyshkovski@gmail.com',
-    url='https://github.com/narnikgamarnikus/django-referrals',
+    url='https://github.com/narnikgamarnikus/django-simple-referrals',
     packages=[
         'referrals',
     ],
@@ -61,7 +61,7 @@ setup(
     ],
     license="MIT",
     zip_safe=False,
-    keywords='django-referrals',
+    keywords='django-simple-referrals',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django :: 2.0',
