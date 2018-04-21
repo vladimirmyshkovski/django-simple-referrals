@@ -52,4 +52,4 @@ class MultiLevelReferralListView(LoginRequiredMixin, ListView):
 
 	def get_queryset(self):
 		referrer = MultiLevelReferral.objects.get(user = self.request.user)
-		return MultiLevelReferral.get_tree(referrer)
+		return referrer.get_descendants()

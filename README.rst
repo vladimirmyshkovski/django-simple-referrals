@@ -1,5 +1,5 @@
 =============================
-referrals
+Django-simple-referrals
 =============================
 
 .. image:: https://badge.fury.io/py/django-simple-referrals.svg
@@ -47,6 +47,17 @@ Add referrals's URL patterns:
         url(r'^referrals/', include('referrals_urls', namespace='referrals')),
         ...
     ]
+
+Add to your settings file:
+
+.. code-block:: python
+
+    DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = 'TEST' # The token to be used by default
+    DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/' # The signup form URL
+
+
+
+
 
 Features
 --------
