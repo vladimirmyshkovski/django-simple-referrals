@@ -1,0 +1,12 @@
+<form>
+	<input type="text" id="referralLink" class="" value="{{ link }}">
+
+	<button type="button" class="" data-toggle="tooltip" title="Click to copy referral link" alt="Click to copy referral link" data-clipboard-target="#referralLink">Copy</buttin>
+</form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
+<script type="text/javascript">
+	window.onload = function() {
+		new Clipboard('.btn');
+	};
+</script>
