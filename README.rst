@@ -63,6 +63,7 @@ Features
 --------
 
 * TODO
+- Create a class for extracting the defaul UUID token
 
 Running Tests
 -------------
