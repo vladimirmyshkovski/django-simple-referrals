@@ -48,7 +48,6 @@ class MultiLevelReferralListView(LoginRequiredMixin, ListView):
 	model = MultiLevelReferral
 	template_name = 'referrals/multi_level_referral_list.html'
 	context_object_name = 'multi_level_referral_list'
-	paginate_by = 10
 
 	def get_queryset(self):
 		referrer = MultiLevelReferral.objects.get(user = self.request.user)
