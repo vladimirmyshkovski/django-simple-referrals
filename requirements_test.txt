@@ -4,5 +4,5 @@ flake8>=2.1.0
 tox>=1.7.0
 codecov>=2.0.0
 django-test-plus>=1.0.22 
-
+bs4>=4.4.0
 # Additional test requirements go here
