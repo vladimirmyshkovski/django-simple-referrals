@@ -102,7 +102,6 @@ Or, if you want to use a multi-level structure:
 Where the 'position' must be 'child' or 'sibling'
 
 If you pass the value "child", then a child will be created from the referral, by whose link the user has registered.
-
 If you specify "sibling", you will create a referral that is at the same level as the user whose link the user is registered with.
 
 3) Template tags with referral link:
@@ -135,7 +134,7 @@ Get the superuser token:
 
     User = get_user_model()
 
-    user = User.objects.filter(is_superuser).first()
+    user = User.objects.filter(is_superuser=True).first()
 
     if user:
         link = Link.objects.create(user=user)
@@ -147,6 +146,7 @@ If you use a multi-level structure, first create a root user:
 
     from referrals.models import MultiLevelReferral
     from django.contrib.auth import get_user_model
+
 
     User = get_user_model()
 
