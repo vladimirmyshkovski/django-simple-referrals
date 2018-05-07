@@ -89,7 +89,7 @@ If you want to use a flat structure:
 
 
 
-Or, if you want to use a multi-level structure
+Or, if you want to use a multi-level structure:
 
 .. code-block:: python
 
@@ -123,6 +123,36 @@ An incompromise will be created with the button "Copy" by clicking on it, the re
     export DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'          # The signup URL
 
 
+DJANGO_REFERRALS_DEFAULT_INPUT_VALUE - This is a user token, under which users will be registered by default.
+
+Get the superuser token:
+
+.. code-block:: python
+
+    from django.contrib.auth import get_user_model
+    from referrals.models import Link
+
+
+    User = get_user_model()
+
+    user = User.objects.filter(is_superuser).first()
+
+    if user:
+        link = Link.objects.create(user=user)
+        print(str(link))
+
+If you use a multi-level structure, first create a root user:
+
+.. code-block:: python
+
+    from referrals.models import MultiLevelReferral
+    from django.contrib.auth import get_user_model
+
+    User = get_user_model()
+
+    root_user = User.objects.order_by('?')
+
+    MultiLevelReferral.add_root(user=root_user)
 
 
 
