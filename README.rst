@@ -9,7 +9,10 @@ Django-simple-referrals
     :target: https://travis-ci.org/narnikgamarnikus/django-simple-referrals
 
 .. image:: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals
+    :target: https://codecov.io/gh/narnikgamarnikus/Django-simple-referrals
+
+.. image:: https://readthedocs.org/projects/django-simple-referrals/badge/?version=latest
+    :target: https://readthedocs.org/projects/django-simple-referrals/badge
 
 A simple application that allows you to generate referral links and track referrals
 
