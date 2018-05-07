@@ -138,7 +138,7 @@ Get the superuser token:
 
     if user:
         link = Link.objects.create(user=user)
-        print(str(link))
+        print(str(link.token))
 
 If you use a multi-level structure, first create a root user:
 
