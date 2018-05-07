@@ -104,9 +104,9 @@ If you specify "sibling", you will create a referral that is at the same level a
 
 3) Template tags with referral link:
 ::
-    {% referrals %}
+    {% referrals %} # Import template tags
 
-    {% token %}
+    {% token %} # Use in any place in your html code
 
 An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
 
@@ -128,6 +128,7 @@ Features
 
 * TODO
 - Create a class for extracting the defaul UUID token
+- Eliminate a possible error, with a non uuid4 format token
 
 Running Tests
 -------------
