@@ -1,13 +1,13 @@
 from test_plus.test import TestCase
-from referrals.templatetags import referrals
 from django.template import Context, Template
 from django.test import RequestFactory
 from bs4 import BeautifulSoup
 from referrals.models import Link
-from django.conf import settings
 from django.contrib.auth.models import AnonymousUser
 from django.core.cache import cache
 import random
+import environ
+env = environ.Env()
 
 
 class TestToken(TestCase):
@@ -30,7 +30,10 @@ class TestToken(TestCase):
         ))
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = env(
+            'DJANGO_REFERRALS_FORM_URL',
+            default='http://localhost:8000/accounts/signup/'
+        )
 
         link = Link.objects.get(user=self.user)
 
@@ -54,8 +57,14 @@ class TestToken(TestCase):
         ))
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
-        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+        address = env(
+            'DJANGO_REFERRALS_FORM_URL',
+            default='http://localhost:8000/accounts/signup/'
+        )
+        default_token = env(
+            'DJANGO_REFERRALS_DEFAULT_INPUT_VALUE',
+            default='40ed41dc-d291-4358-ae4e-d3c07c2d67dc'
+        )
 
         self.assertEqual(
             soup.find('form').find('input').get('value'),
@@ -96,7 +105,10 @@ class TestToken(TestCase):
         ))
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = env(
+            'DJANGO_REFERRALS_FORM_URL',
+            default='http://localhost:8000/accounts/signup/'
+        )
 
         self.assertEqual(
             soup.find('form').find('input').get('value'),

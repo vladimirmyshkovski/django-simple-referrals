@@ -75,6 +75,3 @@ else:
         "django.contrib.messages.middleware.MessageMiddleware",
         "django.middleware.clickjacking.XFrameOptionsMiddleware",
     )
-
-DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = 'TEST'
-DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'

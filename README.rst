@@ -82,7 +82,7 @@ If you want to use a flat structure:
 
     from referrals.signals import create_flat_referral
 
-    create_flat_referral.send(request, user)
+    create_flat_referral.send(sender=User, request, user)
 
 
 
@@ -92,7 +92,7 @@ Or, if you want to use a multi-level structure
 
     from referrals.signals import create_multi_level_referral
 
-    create_flat_referral.send(request, user, 'position')
+    create_flat_referral.send(sender=User, request, user, 'position')
 
 
 
@@ -103,7 +103,7 @@ If you pass the value "child", then a child will be created from the referral, b
 If you specify "sibling", you will create a referral that is at the same level as the user whose link the user is registered with.
 
 3) Template tags with referral link:
-
+::
     {% referrals %}
 
     {% token %}
