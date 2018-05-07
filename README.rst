@@ -16,7 +16,15 @@ A simple application that allows you to generate referral links and track referr
 Documentation
 -------------
 
+There are two types of referral structure: flat and multilevel.
+
+A flat structure means that the user can have referrals, and they will all be on the same level.
+
+Multilevel structure means that the user can have children who, in turn, also have children, each of which will be on a level lower (deeper) than the parent.
+
+
 The full documentation is at https://django-simple-referrals.readthedocs.io.
+
 
 Quickstart
 ----------
@@ -48,12 +56,68 @@ Add referrals's URL patterns:
         ...
     ]
 
-Add to your settings file:
+
+
+Usage
+----------
+
+1) Override your SignupForm
 
 .. code-block:: python
 
-    DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = 'TEST' # The token to be used by default
-    DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/' # The signup form URL
+    from referrals.widgets import ReferralWidget
+    from referrals.fields import ReferralField
+
+    class ReferralSignupForm(SignupForm):
+
+        referral = ReferralField(widget=ReferralWidget())
+
+
+
+2) After registration, send a signal
+
+If you want to use a flat structure:
+
+.. code-block:: python
+
+    from referrals.signals import create_flat_referral
+
+    create_flat_referral.send(request, user)
+
+
+
+Or, if you want to use a multi-level structure
+
+.. code-block:: python
+
+    from referrals.signals import create_multi_level_referral
+
+    create_flat_referral.send(request, user, 'position')
+
+
+
+Where the 'position' must be 'child' or 'sibling'
+
+If you pass the value "child", then a child will be created from the referral, by whose link the user has registered.
+
+If you specify "sibling", you will create a referral that is at the same level as the user whose link the user is registered with.
+
+3) Template tags with referral link:
+
+    {% referrals %}
+
+    {% token %}
+
+An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
+
+4) Export default variables:
+
+.. code-block:: python
+
+    export DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' # The token to be used by
+                                                                                         # default. WARNING: Must be uuid4 
+    
+    export DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'          # The signup URL
 
 
 

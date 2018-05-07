@@ -57,7 +57,8 @@ setup(
     ],
     include_package_data=True,
     install_requires=[
-        'django-treebeard'
+        'django-treebeard',
+        'django-environ==0.4.4'
     ],
     license="MIT",
     zip_safe=False,
