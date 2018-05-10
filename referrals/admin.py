@@ -4,12 +4,15 @@ from treebeard.forms import movenodeform_factory
 from .models import FlatReferral, Link, MultiLevelReferral
 
 
+@admin.register(MultiLevelReferral)
 class MultiLevelReferralAdmin(TreeAdmin):
     form = movenodeform_factory(MultiLevelReferral)
 
 
-admin.site.register(MultiLevelReferral, MultiLevelReferralAdmin)
+@admin.register(Link)
+class LinkAdmin(admin.ModelAdmin):
+    list_display = ['user', 'token']
+    readonly_fields = ['token']
 
 
 admin.site.register(FlatReferral)
-admin.site.register(Link)

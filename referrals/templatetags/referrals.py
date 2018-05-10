@@ -10,8 +10,7 @@ register = template.Library()
 
 @register.inclusion_tag('referrals/referral_token.html', takes_context=True)
 def token(context):
-    address = env('DJANGO_REFERRALS_FORM_URL',
-                  default='http://localhost:8000/accounts/signup/')
+    address = env('DJANGO_REFERRALS_FORM_URL')
 
     request = context.get('request', None)
     if request:
@@ -26,17 +25,14 @@ def token(context):
                 cache.set(
                     '{}_referral_link'.format(user),
                     '{}'.format(token),
-                    60*60*24
+                    60*5
                 )
 
             return {
                 'link': '{}?ref={}'.format(address, token)
             }
 
-        default_token = env(
-            'DJANGO_REFERRALS_DEFAULT_INPUT_VALUE',
-            default='40ed41dc-d291-4358-ae4e-d3c07c2d67dc'
-        )
+        default_token = env('DJANGO_REFERRALS_DEFAULT_INPUT_VALUE')
         return {
             'link': '{}?ref={}'.format(address, default_token)
         }
