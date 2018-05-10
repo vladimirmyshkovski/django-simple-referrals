@@ -5,12 +5,13 @@ language: python
 python:
   - "3.6"
 
-env: 
+env:
+  global:
+    - DJANGO_REFERRALS_DEFAULT_INPUT_VALUE='40ed41dc-d291-4358-ae4e-d3c07c2d67dc'
+    - DJANGO_REFERRALS_FORM_URL=http://localhost:8000/accounts/signup/  
   - TOX_ENV=py36-django-20
   #- TOX_ENV=py35-django-20
   - TOX_ENV=py34-django-20
-  - DJANGO_REFERRALS_DEFAULT_INPUT_VALUE='40ed41dc-d291-4358-ae4e-d3c07c2d67dc'
-  - DJANGO_REFERRALS_FORM_URL=http://localhost:8000/accounts/signup/
 
 matrix:
   fast_finish: true
