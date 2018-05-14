@@ -39,7 +39,7 @@ class MultiLevelReferralDetailView(LoginRequiredMixin, DetailView):
         obj = super(MultiLevelReferralDetailView,
                     self).get_object(queryset=None)
         referrer = MultiLevelReferral.objects.get(user=self.request.user)
-        if obj.is_descendant_of(referrer) or obj.user == self.request.user:
+        if obj.is_descendant_of(referrer) and obj.user == self.request.user:
             return obj
         else:
             raise PermissionDenied()

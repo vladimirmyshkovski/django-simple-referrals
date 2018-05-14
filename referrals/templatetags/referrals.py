@@ -17,17 +17,16 @@ def token(context):
         if request.user.is_authenticated:
             user = context['request'].user
 
-            if '{}_referral_link'.format(user) in cache:
-                token = cache.get('{}_referral_link'.format(user))
+            if '{}_referral_link'.format(user.id) in cache:
+                token = cache.get('{}_referral_link'.format(user.id))
             else:
                 link, created = Link.objects.get_or_create(user=user)
                 token = link.token
                 cache.set(
                     '{}_referral_link'.format(user),
                     '{}'.format(token),
-                    60*5
+                    60*60*24*30
                 )
-
             return {
                 'link': '{}?ref={}'.format(address, token)
             }
