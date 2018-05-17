@@ -2,7 +2,7 @@ from django.forms.renderers import DjangoTemplates, Jinja2
 from test_plus.test import TestCase
 from referrals import widgets, fields
 from django import forms
-from django.template import Context, Template, TemplateSyntaxError
+from django.template import Context, Template
 from django.test import RequestFactory
 
 
@@ -44,13 +44,13 @@ class ReferralWidgetTest(TestCase):
 
     def test_render(self):
         widgets.ReferralWidget()
-        html = '''<input id="id-referral" type="hidden" name="referral" value="40ed41dc-d291-4358-ae4e-d3c07c2d67dc"><script type="text/javascript">window.onload=function(){var getUrlParameter=function getUrlParameter(sParam){var sPageURL=decodeURIComponent(window.location.search.substring(1)), sURLVariables=sPageURL.split('&'), sParameterName, i; for (i=0; i < sURLVariables.length; i++){sParameterName=sURLVariables[i].split('='); if (sParameterName[0]===sParam){return sParameterName[1]===undefined ? true : sParameterName[1];}}};var referralLink=getUrlParameter('ref');var referral=localStorage.getItem('referralLink');if (typeof referralLink !=="undefined"){localStorage.setItem('referralLink', referralLink)};if (typeof referral==="undefined" || referral===null){localStorage.setItem('referralLink', '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' )};var signUpReferralLink=localStorage.getItem('referralLink');document.getElementById('id-referral').value=signUpReferralLink;}</script>'''
+        html = '''<input id="id-referral" type="hidden" name="referral" value="TEST"><script type="text/javascript">window.onload=function(){var getUrlParameter=function getUrlParameter(sParam){var sPageURL=decodeURIComponent(window.location.search.substring(1)), sURLVariables=sPageURL.split('&'), sParameterName, i; for (i=0; i < sURLVariables.length; i++){sParameterName=sURLVariables[i].split('='); if (sParameterName[0]===sParam){return sParameterName[1]===undefined ? true : sParameterName[1];}}};var referralLink=getUrlParameter('ref');var referral=localStorage.getItem('referralLink');if (typeof referralLink !=="undefined"){localStorage.setItem('referralLink', referralLink)};if (typeof referral==="undefined" || referral===null){localStorage.setItem('referralLink', 'TEST' )};var signUpReferralLink=localStorage.getItem('referralLink');document.getElementById('id-referral').value=signUpReferralLink;}</script>'''
         attrs = {
             'type': 'hidden',
             'id': 'id-referral',
         }
         self.check_html(widgets.ReferralWidget(), 'referral',
-                        '40ed41dc-d291-4358-ae4e-d3c07c2d67dc',
+                        'TEST',
                         html=html, attrs=attrs)
 
     def test_js(self):

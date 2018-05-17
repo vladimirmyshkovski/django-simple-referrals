@@ -112,14 +112,14 @@ If you specify "sibling", you will create a referral that is at the same level a
 
 An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
 
-4) Export default variables:
+4) Add to your settings:
 
 .. code-block:: python
 
-    export DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' # The token to be used by
-                                                                                         # default. WARNING: Must be uuid4 
+    DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' # The token to be used by
+                                                                                  # default. WARNING: Must be uuid4 
     
-    export DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'          # The signup URL
+    DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'          # The signup URL
 
 
 DJANGO_REFERRALS_DEFAULT_INPUT_VALUE - This is a user token, under which users will be registered by default.
