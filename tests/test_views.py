@@ -201,6 +201,25 @@ class TestMultiLevelReferralListView(TestCase):
         resp = self.client.get(self.reverse(
             'referrals:multi_level_referral_list'))
         self.assertEqual(resp.status_code, 200)
+        self.assertTrue(resp.context['is_paginated'])
+        self.assertEqual(
+            len(resp.context['multi_level_referral_list']),
+            10
+        )
+
+    def test_second_page(self):
+        self.client.login(
+            username='{}'.format(self.root.user.username),
+            password='password'
+        )
+        resp = self.client.get(self.reverse(
+            'referrals:multi_level_referral_list') + '?page=2')
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue(resp.context['is_paginated'])
+        self.assertEqual(
+            len(resp.context['multi_level_referral_list']),
+            6
+        )
 
 
 class TestMultiLevelReferralDetailView(TestCase):
