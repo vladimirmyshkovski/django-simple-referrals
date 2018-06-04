@@ -163,7 +163,7 @@ If you use a multi-level structure, first create a root user:
 
 Put this javascript code wherever your referral link will lead.
 ::
-<script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
+    <script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
 
 
 
