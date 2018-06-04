@@ -14,6 +14,19 @@ from django.core.exceptions import ValidationError
 from referrals import models
 
 
+class TestLink(TestCase):
+
+    def setUp(self):
+        self.first_user = self.make_user('u1')
+        self.link = models.Link.objects.create(user=self.first_user)
+
+    def test__str__(self):
+        self.assertEqual(
+            self.link.__str__(),
+            str(self.link.token)
+        )
+
+
 class TestReferral(TestCase):
 
     def setUp(self):

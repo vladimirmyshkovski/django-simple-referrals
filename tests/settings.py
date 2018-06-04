@@ -77,4 +77,5 @@ else:
     )
 
 DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = 'TEST'
-DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'
+DJANGO_REFERRALS_DEFAULT_URL = 'http://localhost:8000/'
+DJANGO_REFERRALS_PREFIX = ''

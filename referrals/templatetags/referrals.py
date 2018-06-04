@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.inclusion_tag('referrals/referral_input.html', takes_context=True)
 def input(context):
-    address = settings.DJANGO_REFERRALS_FORM_URL
+    address = settings.DJANGO_REFERRALS_DEFAULT_URL
 
     request = context.get('request', None)
     if request:
@@ -30,15 +30,15 @@ def input(context):
                 'link': '{}?ref={}'.format(address, token)
             }
 
-        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
-        return {
-            'link': '{}?ref={}'.format(address, default_token)
-        }
+    default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+    return {
+        'link': '{}?ref={}'.format(address, default_token)
+    }
 
 
 @register.simple_tag(takes_context=True)
 def token(context):
-    address = settings.DJANGO_REFERRALS_FORM_URL
+    address = settings.DJANGO_REFERRALS_DEFAULT_URL
 
     request = context.get('request', None)
     if request:
@@ -57,5 +57,5 @@ def token(context):
                 )
             return '{}?ref={}'.format(address, token)
 
-        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
-        return '{}?ref={}'.format(address, default_token)
+    default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+    return '{}?ref={}'.format(address, default_token)

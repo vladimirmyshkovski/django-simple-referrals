@@ -3,8 +3,14 @@ from django.conf.urls import url
 
 from . import views
 
+
 app_name = 'referrals'
 urlpatterns = [
+    url(
+        r'^$',
+        view=views.JavaScriptCode.as_view(),
+        name='javascript_code'
+    ),
     url(
         r'^flat-referrals/$',
         view=views.FlatReferralListView.as_view(),

@@ -1,7 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView
-from .models import FlatReferral, MultiLevelReferral
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.base import ContextMixin
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
+
+from .models import FlatReferral, MultiLevelReferral
 
 
 class FlatReferralDetailView(LoginRequiredMixin, DetailView):
@@ -59,3 +62,17 @@ class MultiLevelReferralListView(LoginRequiredMixin, ListView):
         #referrer = MultiLevelReferral.objects.get(user=self.request.user)
         #return referrer.get_descendants()
         return queryset.filter(id__in=descendants_ids)
+
+
+class JavaScriptCode(TemplateView, ContextMixin):
+
+    content_type = 'application/javascript'
+    template_name = 'referrals/referral_script.js'
+
+    def get_context_data(self, **kwargs):
+        context = super(JavaScriptCode, self).get_context_data(**kwargs)
+        default_value = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+        prefix = settings.DJANGO_REFERRALS_PREFIX
+        context['default_value'] = default_value
+        context['prefix'] = prefix
+        return context

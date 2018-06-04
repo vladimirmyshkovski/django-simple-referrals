@@ -29,7 +29,7 @@ class TestInput(TestCase):
         )
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
 
         link = Link.objects.get(user=self.user)
 
@@ -54,7 +54,7 @@ class TestInput(TestCase):
         )
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
         default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
 
         self.assertEqual(
@@ -98,11 +98,27 @@ class TestInput(TestCase):
         ))
 
         soup = BeautifulSoup(out, 'html.parser')
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
 
         self.assertEqual(
             soup.find('form').find('input').get('value'),
             '{}?ref={}'.format(address, link_from_cache)
+        )
+
+    def test_without_request(self):
+        out = Template(
+            "{% load referrals %}"
+            "{% input %}"
+        ).render(Context({
+            }
+        ))
+
+        soup = BeautifulSoup(out, 'html.parser')
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
+        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+        self.assertEqual(
+            soup.find('form').find('input').get('value'),
+            '{}?ref={}'.format(address, default_token)
         )
 
     def tearDown(self):
@@ -129,7 +145,7 @@ class TestToken(TestCase):
         )
 
         link = Link.objects.get(user=self.user)
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
 
         self.assertEqual(
             out,
@@ -150,9 +166,24 @@ class TestToken(TestCase):
             })
         )
 
-        address = settings.DJANGO_REFERRALS_FORM_URL
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
         default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
 
+        self.assertEqual(
+            out,
+            '{}?ref={}'.format(address, default_token)
+        )
+
+    def test_without_request(self):
+        out = Template(
+            "{% load referrals %}"
+            "{% token %}"
+        ).render(Context({
+            }
+        ))
+
+        address = settings.DJANGO_REFERRALS_DEFAULT_URL
+        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
         self.assertEqual(
             out,
             '{}?ref={}'.format(address, default_token)

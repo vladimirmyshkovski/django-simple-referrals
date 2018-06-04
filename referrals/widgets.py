@@ -11,6 +11,7 @@ class ReferralWidget(Widget):
         default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
         return {
             'widget': {
+                'prefix': settings.DJANGO_REFERRALS_PREFIX,
                 'name': name,
                 'value': value,
                 'default_value': default_token

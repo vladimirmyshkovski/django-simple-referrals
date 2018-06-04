@@ -291,3 +291,34 @@ class TestMultiLevelReferralDetailView(TestCase):
             resp.status_code,
             403
         )
+
+
+class TestJavaScriptCode(TestCase):
+
+    def setUp(self):
+        self.user = self.make_user()
+
+    def test_view_url_exists_at_desired_location(self):
+        resp = self.client.get('/referrals/')
+        self.assertEqual(resp.status_code, 200)
+
+        self.assertEqual(
+            resp.context['default_value'],
+            'TEST'
+        )
+        self.assertEqual(
+            resp.context['prefix'],
+            ''
+        )
+
+    def test_view_url_accessible_by_name(self):
+        resp = self.client.get(self.reverse('referrals:javascript_code'))
+        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(
+            resp.context['default_value'],
+            'TEST'
+        )
+        self.assertEqual(
+            resp.context['prefix'],
+            ''
+        )
