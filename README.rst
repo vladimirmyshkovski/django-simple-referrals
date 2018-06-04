@@ -172,7 +172,6 @@ Features
 
 * TODO
 - Create a class for extracting the defaul UUID token
-- Eliminate a possible error, with a non uuid4 format token
 - Added social buttons with link and token
 
 Running Tests
