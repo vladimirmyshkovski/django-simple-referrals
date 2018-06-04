@@ -124,7 +124,9 @@ It just returns a token with a link to the current site
     DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' # The token to be used by
                                                                                   # default. WARNING: Must be uuid4 
     
-    DJANGO_REFERRALS_FORM_URL = 'http://localhost:8000/accounts/signup/'          # The signup URL
+    DJANGO_REFERRALS_DEFAULT_URL = 'http://localhost:8000/'                       # Address for referral link
+    DJANGO_REFERRALS_PREFIX = ''                                                  # Prefix for key in localStorage.
+                                                                                  # by default key its 'referralLink'
 
 
 DJANGO_REFERRALS_DEFAULT_INPUT_VALUE - This is a user token, under which users will be registered by default.
