@@ -161,6 +161,10 @@ If you use a multi-level structure, first create a root user:
 
     MultiLevelReferral.add_root(user=root_user)
 
+Put this javascript code wherever your referral link will lead.
+::
+<script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
+
 
 
 Features
