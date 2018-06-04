@@ -111,7 +111,6 @@ If you specify "sibling", you will create a referral that is at the same level a
     {% input %} # Use in any place in your html code
 
 An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
-
 ::
     {% token %} # Also you can use this in any place in your html code
 

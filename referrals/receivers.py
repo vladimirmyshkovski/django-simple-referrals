@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.dispatch import receiver
 from .signals import create_flat_referral, create_multi_level_referral
+from .utils import validate_uuid4
 import logging
 
 
@@ -17,7 +18,7 @@ def save_flat_referral(sender, request, user, **kwargs):
         referral_link = request.GET.get('ref', None)
 
     try:
-        if referral_link:
+        if validate_uuid4(referral_link):
             link = Link.objects.get(token=referral_link)
             FlatReferral.objects.create(
                 referrer=link.user,
@@ -41,7 +42,7 @@ def save_multi_level_referral(sender, request, user, position, **kwargs):
     if not referral_link:
         referral_link = request.GET.get('ref', None)
     try:
-        if referral_link:
+        if validate_uuid4(referral_link):
             link = Link.objects.get(token=referral_link)
             try:
                 referral = MultiLevelReferral.objects.get(user=link.user)
