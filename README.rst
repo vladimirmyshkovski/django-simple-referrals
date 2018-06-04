@@ -108,9 +108,15 @@ If you specify "sibling", you will create a referral that is at the same level a
 ::
     {% referrals %} # Import template tags
 
-    {% token %} # Use in any place in your html code
+    {% input %} # Use in any place in your html code
 
 An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
+
+::
+    {% token %} # Also you can use this in any place in your html code
+
+It just returns a token with a link to the current site
+
 
 4) Add to your settings:
 
@@ -162,6 +168,7 @@ Features
 * TODO
 - Create a class for extracting the defaul UUID token
 - Eliminate a possible error, with a non uuid4 format token
+- Added social buttons with link and token
 
 Running Tests
 -------------

@@ -8,7 +8,7 @@ from django.core.cache import cache
 from django.conf import settings
 
 
-class TestToken(TestCase):
+class TestInput(TestCase):
 
     def setUp(self):
         self.user = self.make_user()
@@ -21,7 +21,7 @@ class TestToken(TestCase):
 
         out = Template(
             "{% load referrals %}"
-            "{% token %}"
+            "{% input %}"
         ).render(Context({
             'request': request,
             'user': self.user
@@ -46,7 +46,7 @@ class TestToken(TestCase):
 
         out = Template(
             "{% load referrals %}"
-            "{% token %}"
+            "{% input %}"
         ).render(Context({
             'request': request,
             'user': self.user
@@ -70,7 +70,7 @@ class TestToken(TestCase):
 
         Template(
             "{% load referrals %}"
-            "{% token %}"
+            "{% input %}"
         ).render(Context({
             'request': request,
             'user': self.user
@@ -90,7 +90,7 @@ class TestToken(TestCase):
 
         out = Template(
             "{% load referrals %}"
-            "{% token %}"
+            "{% input %}"
         ).render(Context({
             'request': request,
             'user': self.user
@@ -107,3 +107,53 @@ class TestToken(TestCase):
 
     def tearDown(self):
         cache.clear()
+
+
+class TestToken(TestCase):
+
+    def setUp(self):
+        self.user = self.make_user()
+
+    def test_with_user(self):
+        request_factory = RequestFactory()
+        request = request_factory.get('/?ref=123123123')
+        request.user = self.user
+
+        out = Template(
+            "{% load referrals %}"
+            "{% token %}"
+        ).render(Context({
+            'request': request,
+            'user': self.user
+            })
+        )
+
+        link = Link.objects.get(user=self.user)
+        address = settings.DJANGO_REFERRALS_FORM_URL
+
+        self.assertEqual(
+            out,
+            '{}?ref={}'.format(address, link.token)
+        )
+
+    def test_without_user(self):
+        request_factory = RequestFactory()
+        request = request_factory.get('/?ref=123123123')
+        request.user = AnonymousUser()
+
+        out = Template(
+            "{% load referrals %}"
+            "{% token %}"
+        ).render(Context({
+            'request': request,
+            'user': AnonymousUser()
+            })
+        )
+
+        address = settings.DJANGO_REFERRALS_FORM_URL
+        default_token = settings.DJANGO_REFERRALS_DEFAULT_INPUT_VALUE
+
+        self.assertEqual(
+            out,
+            '{}?ref={}'.format(address, default_token)
+        )
