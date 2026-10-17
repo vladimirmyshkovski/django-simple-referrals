@@ -5,16 +5,18 @@ Django-simple-referrals
 .. image:: https://badge.fury.io/py/django-simple-referrals.svg
     :target: https://badge.fury.io/py/django-simple-referrals
 
-.. image:: https://travis-ci.org/narnikgamarnikus/django-simple-referrals.svg?branch=master
-    :target: https://travis-ci.org/narnikgamarnikus/django-simple-referrals
+.. image:: https://github.com/vladimirmyshkovski/django-simple-referrals/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/vladimirmyshkovski/django-simple-referrals/actions/workflows/test.yml
 
-.. image:: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/narnikgamarnikus/Django-simple-referrals
+.. image:: https://codecov.io/gh/vladimirmyshkovski/django-simple-referrals/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/vladimirmyshkovski/django-simple-referrals
 
 .. image:: https://readthedocs.org/projects/django-simple-referrals/badge/?version=latest
     :target: https://readthedocs.org/projects/django-simple-referrals/badge
 
 A simple application that allows you to generate referral links and track referrals
+
+Requires Python 3.9+ and Django 4.2+.
 
 Documentation
 -------------
@@ -50,12 +52,12 @@ Add referrals's URL patterns:
 
 .. code-block:: python
 
-    from referrals import urls as referrals_urls
+    from django.urls import include, path
 
 
     urlpatterns = [
         ...
-        url(r'^referrals/', include('referrals_urls', namespace='referrals')),
+        path('referrals/', include('referrals.urls', namespace='referrals')),
         ...
     ]
 
@@ -95,7 +97,7 @@ Or, if you want to use a multi-level structure:
 
     from referrals.signals import create_multi_level_referral
 
-    create_flat_referral.send(sender=User, request, user, 'position')
+    create_multi_level_referral.send(sender=User, request, user, 'position')
 
 
 

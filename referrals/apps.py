@@ -4,6 +4,7 @@ from django.apps import AppConfig
 
 class ReferralsConfig(AppConfig):
     name = 'referrals'
+    default_auto_field = 'django.db.models.BigAutoField'
     verbose_name = 'Referrals'
 
     def ready(self):
