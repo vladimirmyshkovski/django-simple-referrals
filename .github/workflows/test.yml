@@ -36,3 +36,19 @@ jobs:
           cache: pip
       - run: pip install -e ".[test]" "Django~=${{ matrix.django }}.0"
       - run: python manage.py test tests
+      # Catches silent drift between the models and the shipped migration,
+      # e.g. when Django changes DEFAULT_AUTO_FIELD.
+      - run: python manage.py makemigrations --check --dry-run
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -e . sphinx
+      # -W turns warnings into errors: the README is included by the docs,
+      # so an RST mistake in it breaks the build here instead of on RTD.
+      - run: python -m sphinx -b html -W --keep-going docs docs/_build/html

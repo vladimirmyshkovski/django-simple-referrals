@@ -107,16 +107,19 @@ If you pass the value "child", then a child will be created from the referral, b
 If you specify "sibling", you will create a referral that is at the same level as the user whose link the user is registered with.
 
 3) Template tags with referral link:
-::
-    {% referrals %} # Import template tags
 
-    {% input %} # Use in any place in your html code
+Load the template tags:
 
-An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
-::
-    {% token %} # Also you can use this in any place in your html code
+.. code-block:: html+django
 
-It just returns a token with a link to the current site
+    {% load referrals %}
+
+Then use ``{% input %}`` in any place in your html code. A form with a
+"Copy" button is created; clicking it copies the referral link of this user
+to the clipboard.
+
+``{% token %}`` can also be used in any place in your html code. It just
+returns a token with a link to the current site.
 
 
 4) Add to your settings:
@@ -164,17 +167,17 @@ If you use a multi-level structure, first create a root user:
     MultiLevelReferral.add_root(user=root_user)
 
 Put this javascript code wherever your referral link will lead.
-::
-    <script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
 
+.. code-block:: html
+
+    <script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
 
 
 Features
 --------
 
-* TODO
-- Create a class for extracting the defaul UUID token
-- Added social buttons with link and token
+* Create a class for extracting the defaul UUID token
+* Added social buttons with link and token
 
 Running Tests
 -------------
