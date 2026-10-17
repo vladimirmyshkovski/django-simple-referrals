@@ -5,16 +5,18 @@ Django-simple-referrals
 .. image:: https://badge.fury.io/py/django-simple-referrals.svg
     :target: https://badge.fury.io/py/django-simple-referrals
 
-.. image:: https://travis-ci.org/narnikgamarnikus/django-simple-referrals.svg?branch=master
-    :target: https://travis-ci.org/narnikgamarnikus/django-simple-referrals
+.. image:: https://github.com/vladimirmyshkovski/django-simple-referrals/actions/workflows/test.yml/badge.svg
+    :target: https://github.com/vladimirmyshkovski/django-simple-referrals/actions/workflows/test.yml
 
-.. image:: https://codecov.io/gh/narnikgamarnikus/django-simple-referrals/branch/master/graph/badge.svg
-    :target: https://codecov.io/gh/narnikgamarnikus/Django-simple-referrals
+.. image:: https://codecov.io/gh/vladimirmyshkovski/django-simple-referrals/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/vladimirmyshkovski/django-simple-referrals
 
 .. image:: https://readthedocs.org/projects/django-simple-referrals/badge/?version=latest
     :target: https://readthedocs.org/projects/django-simple-referrals/badge
 
 A simple application that allows you to generate referral links and track referrals
+
+Requires Python 3.9+ and Django 4.2+ (4.2, 5.x and 6.x are tested in CI).
 
 Documentation
 -------------
@@ -50,12 +52,12 @@ Add referrals's URL patterns:
 
 .. code-block:: python
 
-    from referrals import urls as referrals_urls
+    from django.urls import include, path
 
 
     urlpatterns = [
         ...
-        url(r'^referrals/', include('referrals_urls', namespace='referrals')),
+        path('referrals/', include('referrals.urls', namespace='referrals')),
         ...
     ]
 
@@ -95,7 +97,7 @@ Or, if you want to use a multi-level structure:
 
     from referrals.signals import create_multi_level_referral
 
-    create_flat_referral.send(sender=User, request, user, 'position')
+    create_multi_level_referral.send(sender=User, request, user, 'position')
 
 
 
@@ -105,16 +107,19 @@ If you pass the value "child", then a child will be created from the referral, b
 If you specify "sibling", you will create a referral that is at the same level as the user whose link the user is registered with.
 
 3) Template tags with referral link:
-::
-    {% referrals %} # Import template tags
 
-    {% input %} # Use in any place in your html code
+Load the template tags:
 
-An incompromise will be created with the button "Copy" by clicking on it, the referral link of this user will be copied to the clipboard.
-::
-    {% token %} # Also you can use this in any place in your html code
+.. code-block:: html+django
 
-It just returns a token with a link to the current site
+    {% load referrals %}
+
+Then use ``{% input %}`` in any place in your html code. A form with a
+"Copy" button is created; clicking it copies the referral link of this user
+to the clipboard.
+
+``{% token %}`` can also be used in any place in your html code. It just
+returns a token with a link to the current site.
 
 
 4) Add to your settings:
@@ -162,17 +167,17 @@ If you use a multi-level structure, first create a root user:
     MultiLevelReferral.add_root(user=root_user)
 
 Put this javascript code wherever your referral link will lead.
-::
-    <script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
 
+.. code-block:: html
+
+    <script type="text/javascript" src="{% url 'referrals:javascript_code' %}"></script>
 
 
 Features
 --------
 
-* TODO
-- Create a class for extracting the defaul UUID token
-- Added social buttons with link and token
+* Create a class for extracting the defaul UUID token
+* Added social buttons with link and token
 
 Running Tests
 -------------
@@ -181,9 +186,12 @@ Does the code actually work?
 
 ::
 
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install tox
-    (myenv) $ tox
+    python -m venv .venv
+    . .venv/bin/activate
+    pip install -e ".[test]"
+    python manage.py test tests
+
+Or run ``make test``. The full support matrix (Python 3.9-3.14 x Django 4.2, 5.x, 6.x) runs in CI.
 
 Credits
 -------

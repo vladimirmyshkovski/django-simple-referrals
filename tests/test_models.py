@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 """
-test_django-referrals
+test_django_simple_referrals
 ------------
 
-Tests for `django-referrals` models module.
+Tests for `django-simple-referrals` models module.
 """
 
 from test_plus.test import TestCase

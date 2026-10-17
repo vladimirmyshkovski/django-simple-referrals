@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 import uuid
 from treebeard.mp_tree import MP_Node
 
 
-@python_2_unicode_compatible
 class FlatReferral(models.Model):
 
     referrer = models.ForeignKey(
@@ -60,7 +58,6 @@ class Link(models.Model):
         return str(self.token)
 
 
-@python_2_unicode_compatible
 class MultiLevelReferral(MP_Node):
     user = models.OneToOneField(
         get_user_model(),

@@ -1,0 +1,54 @@
+name: test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.10", "3.12", "3.13", "3.14"]
+        django: ["4.2", "5.2", "6.1"]
+        exclude:
+          # Django 5.2 requires Python >= 3.10
+          - python: "3.9"
+            django: "5.2"
+          # Django 6.x requires Python >= 3.12
+          - python: "3.9"
+            django: "6.1"
+          - python: "3.10"
+            django: "6.1"
+          # Django 4.2 is only supported up to Python 3.12
+          - python: "3.13"
+            django: "4.2"
+          - python: "3.14"
+            django: "4.2"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -e ".[test]" "Django~=${{ matrix.django }}.0"
+      - run: python manage.py test tests
+      # Catches silent drift between the models and the shipped migration,
+      # e.g. when Django changes DEFAULT_AUTO_FIELD.
+      - run: python manage.py makemigrations --check --dry-run
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: pip install -e . sphinx
+      # -W turns warnings into errors: the README is included by the docs,
+      # so an RST mistake in it breaks the build here instead of on RTD.
+      - run: python -m sphinx -b html -W --keep-going docs docs/_build/html

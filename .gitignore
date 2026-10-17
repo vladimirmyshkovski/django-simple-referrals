@@ -45,3 +45,9 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+
+# Virtualenv
+.venv/
+
+# Coverage XML artifact
+coverage.xml

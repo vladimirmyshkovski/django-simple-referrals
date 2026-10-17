@@ -33,8 +33,7 @@ lint: ## check style with flake8
 test: ## run tests quickly with the default Python
 	python runtests.py tests
 
-test-all: ## run tests on every Python version with tox
-	tox
+
 
 coverage: ## check code coverage quickly with the default Python
 	coverage run --source referrals runtests.py tests
@@ -51,9 +50,8 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(BROWSER) docs/_build/html/index.html
 
 release: clean ## package and upload a release
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	python -m build
+	twine upload dist/*
 
 sdist: clean ## package
-	python setup.py sdist
-	ls -l dist
+	python -m build

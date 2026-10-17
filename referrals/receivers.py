@@ -33,7 +33,7 @@ def save_flat_referral(sender, request, user, **kwargs):
 
 @receiver(create_multi_level_referral, sender=get_user_model())
 def save_multi_level_referral(sender, request, user, position, **kwargs):
-    if position is not 'child' and position is not 'sibling':
+    if position not in ('child', 'sibling'):
         logger.exception('{} was sent instead of a child or brother'.format(
             position))  # pragma: no cover
         raise KeyError('Position can be child or sibling')  # pragma: no cover
