@@ -2,111 +2,63 @@
 Contributing
 ============
 
-Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given. 
-
-You can contribute in many ways:
-
-Types of Contributions
-----------------------
+Contributions are welcome.
 
 Report Bugs
 ~~~~~~~~~~~
 
-Report bugs at https://github.com/narnikgamarnikus/django-referrals/issues.
+Report bugs at https://github.com/vladimirmyshkovski/django-simple-referrals/issues.
 
 If you are reporting a bug, please include:
 
 * Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
+* The Python and Django versions you are running.
 * Detailed steps to reproduce the bug.
-
-Fix Bugs
-~~~~~~~~
-
-Look through the GitHub issues for bugs. Anything tagged with "bug"
-is open to whoever wants to implement it.
-
-Implement Features
-~~~~~~~~~~~~~~~~~~
-
-Look through the GitHub issues for features. Anything tagged with "feature"
-is open to whoever wants to implement it.
-
-Write Documentation
-~~~~~~~~~~~~~~~~~~~
-
-referrals could always use more documentation, whether as part of the 
-official referrals docs, in docstrings, or even on the web in blog posts,
-articles, and such.
-
-Submit Feedback
-~~~~~~~~~~~~~~~
-
-The best way to send feedback is to file an issue at https://github.com/narnikgamarnikus/django-referrals/issues.
-
-If you are proposing a feature:
-
-* Explain in detail how it would work.
-* Keep the scope as narrow as possible, to make it easier to implement.
-* Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
 
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `django-referrals` for local development.
+1. Fork and clone the repo::
 
-1. Fork the `django-referrals` repo on GitHub.
-2. Clone your fork locally::
+    $ git clone git@github.com:your_name_here/django-simple-referrals.git
+    $ cd django-simple-referrals
 
-    $ git clone git@github.com:your_name_here/django-referrals.git
+2. Create a virtualenv and install the package with its test extras::
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
+    $ python -m venv .venv
+    $ . .venv/bin/activate
+    $ pip install -e ".[test]"
 
-    $ mkvirtualenv django-referrals
-    $ cd django-referrals/
-    $ python setup.py develop
-
-4. Create a branch for local development::
+3. Create a branch for your work::
 
     $ git checkout -b name-of-your-bugfix-or-feature
 
-   Now you can make your changes locally.
+4. Make your changes, then check them::
 
-5. When you're done making changes, check that your changes pass flake8 and the
-   tests, including testing other Python versions with tox::
+    $ flake8 referrals tests
+    $ python manage.py test tests
 
-        $ flake8 referrals tests
-        $ python setup.py test
-        $ tox
+   Alternatively, ``make lint`` and ``make test`` do the same.
 
-   To get flake8 and tox, just pip install them into your virtualenv. 
+5. Commit and push, then open a pull request::
 
-6. Commit your changes and push your branch to GitHub::
-
-    $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website.
+Supported versions
+------------------
+
+Python 3.9 and above. Django 4.2, 5.x and 6.x are tested in CI; see
+`.github/workflows/test.yml` for the exact matrix. Note that Django 5.2
+requires Python 3.10+, Django 6.x requires Python 3.12+, and Django 4.2
+is supported up to Python 3.12.
 
 Pull Request Guidelines
 -----------------------
 
-Before you submit a pull request, check that it meets these guidelines:
-
 1. The pull request should include tests.
-2. If the pull request adds functionality, the docs should be updated. Put
-   your new functionality into a function with a docstring, and add the
-   feature to the list in README.rst.
-3. The pull request should work for Python 2.6, 2.7, and 3.3, and for PyPy. Check 
-   https://travis-ci.org/narnikgamarnikus/django-referrals/pull_requests
-   and make sure that the tests pass for all supported Python versions.
-
-Tips
-----
-
-To run a subset of tests::
-
-    $ python -m unittest tests.test_referrals
+2. If it adds functionality, update ``README.rst`` and the entry in
+   ``HISTORY.rst``.
+3. It must pass CI for the full matrix.
+4. If it changes behaviour, say so explicitly in the description and
+   consider whether it needs a deprecation path.

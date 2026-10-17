@@ -16,7 +16,7 @@ Django-simple-referrals
 
 A simple application that allows you to generate referral links and track referrals
 
-Requires Python 3.9+ and Django 4.2+.
+Requires Python 3.9+ and Django 4.2+ (4.2, 5.x and 6.x are tested in CI).
 
 Documentation
 -------------
@@ -183,9 +183,12 @@ Does the code actually work?
 
 ::
 
-    source <YOURVIRTUALENV>/bin/activate
-    (myenv) $ pip install tox
-    (myenv) $ tox
+    python -m venv .venv
+    . .venv/bin/activate
+    pip install -e ".[test]"
+    python manage.py test tests
+
+Or run ``make test``. The full support matrix (Python 3.9-3.14 x Django 4.2, 5.x, 6.x) runs in CI.
 
 Credits
 -------

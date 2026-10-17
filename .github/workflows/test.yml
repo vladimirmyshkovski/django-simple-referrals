@@ -11,12 +11,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.9", "3.12", "3.13"]
-        django: ["4.2", "5.2"]
+        python: ["3.9", "3.10", "3.12", "3.13", "3.14"]
+        django: ["4.2", "5.2", "6.1"]
         exclude:
-          # Django 5.x requires Python >= 3.10
+          # Django 5.2 requires Python >= 3.10
           - python: "3.9"
             django: "5.2"
+          # Django 6.x requires Python >= 3.12
+          - python: "3.9"
+            django: "6.1"
+          - python: "3.10"
+            django: "6.1"
+          # Django 4.2 is only supported up to Python 3.12
+          - python: "3.13"
+            django: "4.2"
+          - python: "3.14"
+            django: "4.2"
 
     steps:
       - uses: actions/checkout@v4
