@@ -43,9 +43,9 @@ Add it to your `INSTALLED_APPS`:
 .. code-block:: python
 
     INSTALLED_APPS = (
-        ...
+        ...,
         'referrals',
-        ...
+        ...,
     )
 
 Add referrals's URL patterns:
@@ -56,9 +56,9 @@ Add referrals's URL patterns:
 
 
     urlpatterns = [
-        ...
+        ...,
         path('referrals/', include('referrals.urls', namespace='referrals')),
-        ...
+        ...,
     ]
 
 
@@ -109,7 +109,7 @@ If you want to use a flat structure:
 
     from referrals.signals import create_flat_referral
 
-    create_flat_referral.send(sender=User, request, user)
+    create_flat_referral.send(sender=User, request=request, user=user)
 
 
 
@@ -119,9 +119,16 @@ Or, if you want to use a multi-level structure:
 
     from referrals.signals import create_multi_level_referral
 
-    create_multi_level_referral.send(sender=User, request, user, 'position')
+    create_multi_level_referral.send(
+        sender=User,
+        request=request,
+        user=user,
+        position='child',
+    )
 
-
+The signal takes ``request`` and ``user`` as keyword arguments, because
+``sender`` is a keyword argument too and Python does not allow positional
+arguments after one.
 
 Where the 'position' must be 'child' or 'sibling'
 
@@ -148,15 +155,21 @@ returns a token with a link to the current site.
 
 .. code-block:: python
 
-    DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '40ed41dc-d291-4358-ae4e-d3c07c2d67dc' # The token to be used by
-                                                                                  # default. WARNING: Must be uuid4 
-    
+    DJANGO_REFERRALS_DEFAULT_INPUT_VALUE = '<token of an existing Link>' # The token used
+                                                                              # by default. WARNING: Must be a
+                                                                              # uuid4 that already exists as a
+                                                                              # Link row, otherwise the receiver
+                                                                              # logs "Link with token = ... does
+                                                                              # not exist" and records nothing.
+
     DJANGO_REFERRALS_DEFAULT_URL = 'http://localhost:8000/'                       # Address for referral link
     DJANGO_REFERRALS_PREFIX = ''                                                  # Prefix for key in localStorage.
                                                                                   # by default key its 'referralLink'
 
 
-DJANGO_REFERRALS_DEFAULT_INPUT_VALUE - This is a user token, under which users will be registered by default.
+DJANGO_REFERRALS_DEFAULT_INPUT_VALUE - This is a user token, under which users
+will be registered by default. It has to be the token of a ``Link`` row that
+already exists, otherwise the receiver finds no link and records nothing.
 
 Get the superuser token:
 

@@ -6,6 +6,17 @@ History
 0.3 (2026-10-21)
 ++++++++++++++++++
 
+* README: the signal examples were not valid Python. ``.send(sender=User,
+  request, user)`` is a SyntaxError, because Python does not allow positional
+  arguments after a keyword argument. Two issues were filed against this
+  package because of it. The examples are fixed and a test now checks that
+  every python block in the README parses.
+* README: the ``INSTALLED_APPS`` and ``urlpatterns`` examples were missing a
+  comma after the ``...`` placeholder and did not parse either.
+* README: ``DJANGO_REFERRALS_DEFAULT_INPUT_VALUE`` was documented with a
+  concrete uuid that people copy-pasted. It has to be the token of a
+  ``Link`` row that already exists, otherwise the receiver finds no link and
+  records nothing. The placeholder is now explicit about that.
 * Fix the referral token being lost when the signup form is posted to a URL
   without the query string. The token is now also read from the ``ref``
   parameter of the ``Referer`` header, which is the usual case: the user
