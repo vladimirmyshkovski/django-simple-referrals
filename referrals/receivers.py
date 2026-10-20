@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.dispatch import receiver
 from .signals import create_flat_referral, create_multi_level_referral
-from .utils import validate_uuid4
+from .utils import extract_referral_token, validate_uuid4
 import logging
 
 
@@ -13,9 +13,7 @@ logger = logging.getLogger(__name__)
 @receiver(create_flat_referral, sender=get_user_model())
 def save_flat_referral(sender, request, user, **kwargs):
 
-    referral_link = request.POST.get('referral', None)
-    if not referral_link:
-        referral_link = request.GET.get('ref', None)
+    referral_link = extract_referral_token(request)
 
     try:
         if validate_uuid4(referral_link):
@@ -38,9 +36,7 @@ def save_multi_level_referral(sender, request, user, position, **kwargs):
             position))  # pragma: no cover
         raise KeyError('Position can be child or sibling')  # pragma: no cover
 
-    referral_link = request.POST.get('referral', None)
-    if not referral_link:
-        referral_link = request.GET.get('ref', None)
+    referral_link = extract_referral_token(request)
     try:
         if validate_uuid4(referral_link):
             link = Link.objects.get(token=referral_link)

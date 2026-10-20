@@ -3,9 +3,21 @@
 History
 -------
 
-0.3 (2026-10-17)
+0.3 (2026-10-21)
 ++++++++++++++++++
 
+* Fix the referral token being lost when the signup form is posted to a URL
+  without the query string. The token is now also read from the ``ref``
+  parameter of the ``Referer`` header, which is the usual case: the user
+  arrives on ``?ref=<token>`` and then submits the form.
+* README: the usage example referred to an undefined ``SignupForm``. It now
+  shows a complete form and states that the field has to be named
+  ``referral``, and documents the django-allauth variant.
+* Packaging: ``project.license`` moved to the SPDX expression, the deprecated
+  license classifier removed, package discovery switched to ``find`` so
+  ``referrals.migrations`` is not silently left out.
+* Add a GitHub Actions workflow that publishes to PyPI through Trusted
+  Publishing (OIDC), so no API token has to be stored in the repository.
 * Support Django 4.2, 5.x and 6.x on Python 3.9+. Drop support for Django < 4.2 and Python < 3.9.
 * Remove Python 2 compatibility shims(``python_2_unicode_compatible``, ``ugettext_lazy``, ``default_app_config``).
 * ``Signal(providing_args=...)`` was removed in Django 4.0, the arguments are now inferred from receivers.

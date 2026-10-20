@@ -1,0 +1,30 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -e ".[test]" build
+      - run: python manage.py test tests
+      - run: python manage.py makemigrations --check --dry-run
+      - run: python -m build
+
+      # Authenticates to PyPI with an OIDC token, no API token involved.
+      # Requires a trusted publisher on pypi.org pointing at this workflow.
+      - uses: pypa/gh-action-pypi-publish@release/v1

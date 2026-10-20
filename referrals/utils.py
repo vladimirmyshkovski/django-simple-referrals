@@ -1,4 +1,26 @@
+from urllib.parse import parse_qs, urlparse
 from uuid import UUID
+
+
+def extract_referral_token(request):
+    """Find the referral token on a request.
+
+    Looked for in the order a real signup flow provides it:
+
+    1. ``POST['referral']`` - the hidden field rendered by
+       ``ReferralWidget``.
+    2. ``GET['ref']`` - the query string of the referral link itself.
+    3. The ``ref`` query parameter of the ``Referer`` header - the user
+       arrived on ``?ref=<token>`` and then submitted a form that posts to
+       a URL without the query string, which is the usual case.
+    """
+    token = request.POST.get('referral', None)
+    if not token:
+        token = request.GET.get('ref', None)
+    if not token:
+        referer = request.META.get('HTTP_REFERER', '')
+        token = parse_qs(urlparse(referer).query).get('ref', [None])[0]
+    return token
 
 
 def validate_uuid4(uuid_string):

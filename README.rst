@@ -66,18 +66,40 @@ Add referrals's URL patterns:
 Usage
 ----------
 
-1) Override your SignupForm
+1) Add the referral field to your signup form
+
+Subclass whatever signup form you already use and add a ``referral``
+field. The field name has to be ``referral`` - that is the name the
+receiver looks for in the POST data.
 
 .. code-block:: python
 
-    from referrals.widgets import ReferralWidget
+    from django.contrib.auth.forms import UserCreationForm
     from referrals.fields import ReferralField
+    from referrals.widgets import ReferralWidget
+
+
+    class ReferralSignupForm(UserCreationForm):
+
+        referral = ReferralField(widget=ReferralWidget(), required=False)
+
+If you use django-allauth, the same applies to its form:
+
+.. code-block:: python
+
+    from allauth.account.forms import SignupForm
+    from referrals.fields import ReferralField
+    from referrals.widgets import ReferralWidget
+
 
     class ReferralSignupForm(SignupForm):
 
-        referral = ReferralField(widget=ReferralWidget())
+        referral = ReferralField(widget=ReferralWidget(), required=False)
 
-
+The widget copies ``?ref=`` from the query string into a hidden field, so
+the token survives the round trip to the form submission. It also falls
+back to the ``Referer`` header, so a signup form posted to a URL without
+the query string still records the referral.
 
 2) After registration, send a signal
 
