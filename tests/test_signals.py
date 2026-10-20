@@ -78,6 +78,30 @@ class TestCreateFlatReferral(TestCase):
 
         signals.create_flat_referral.disconnect(handler)
 
+    def test_signal_with_referer_header(self):
+        """Signup form posted to a clean URL, ref only in the Referer.
+
+        This is the ordinary flow: the user lands on ``?ref=<token>`` and
+        then submits the signup form, which posts to a URL that does not
+        carry the query string. The token has to survive the round trip.
+        """
+        link = models.Link.objects.get(user=self.referrer)
+        post_request = self.request_factory.post(
+            '/fakeurl/',
+            HTTP_REFERER='https://example.com/fakeurl/?ref={}'.format(
+                link.token)
+        )
+        post_request.user = self.referred
+
+        signals.create_flat_referral.send(
+            sender=self.referrer.__class__,
+            request=post_request,
+            user=self.referred
+        )
+
+        referred = models.FlatReferral.objects.get(referred=self.referred)
+        self.assertTrue(referred in self.referrer.referreds.all())
+
 
 class TestCreateMultiLevelReferral(TestCase):
 

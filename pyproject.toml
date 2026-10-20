@@ -7,7 +7,8 @@ name = "django-simple-referrals"
 version = "0.3"
 description = "A simple application that allows you to generate referral links and track referrals"
 readme = "README.rst"
-license = { file = "LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.9"
 authors = [{ name = "Vladimir Myshkovski", email = "vladimirmyshkovski@gmail.com" }]
 keywords = ["django", "referral", "referrals", "affiliate", "invite"]
@@ -22,7 +23,6 @@ classifiers = [
     "Framework :: Django :: 6.0",
     "Framework :: Django :: 6.1",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
@@ -43,9 +43,8 @@ Homepage = "https://github.com/vladimirmyshkovski/django-simple-referrals"
 Documentation = "https://django-simple-referrals.readthedocs.io"
 Source = "https://github.com/vladimirmyshkovski/django-simple-referrals"
 
-[tool.setuptools]
-packages = ["referrals", "referrals.templatetags"]
-include-package-data = true
+[tool.setuptools.packages.find]
+include = ["referrals*"]
 
-[tool.setuptools.package-data]
-referrals = ["templates/**/*.html", "static/**/*"]
+[tool.setuptools]
+include-package-data = true
